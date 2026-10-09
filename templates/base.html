@@ -1,0 +1,77 @@
+{% load static %}<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Farhan Alam | Django & Python Full-Stack Developer{% endblock %}</title>
+  <meta name="description" content="Farhan Alam is a Django and Python full-stack web developer in Kanpur, India. I build fast, modern websites, e-commerce stores and REST APIs for businesses.">
+  <meta property="og:title" content="Farhan Alam | Django & Python Full-Stack Developer">
+  <meta property="og:description" content="Websites, e-commerce and APIs built with Django. Available for junior roles and client projects.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f3eee4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e4572e'/><text x='50' y='68' font-size='56' text-anchor='middle' font-family='Georgia' font-weight='700' fill='white'>F</text></svg>">
+
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <nav class="navbar navbar-expand-lg site-nav fixed-top" id="siteNav">
+    <div class="container">
+      <a class="navbar-brand brand" href="#top">farhan<span>.</span>dev</a>
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#journey">Journey</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 pb-3 pb-lg-0">
+          <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch colour theme">
+            <i class="bi bi-moon-stars theme-moon"></i><i class="bi bi-sun theme-sun"></i>
+          </button>
+          <a href="#contact" class="btn btn-ink">Hire me</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div class="brand">farhan<span>.</span>dev</div>
+      <div class="small foot-note">Designed and built by hand with Django &amp; Bootstrap &middot; Kanpur, India</div>
+      <div class="d-flex gap-3 fs-5">
+        <a href="{{ p.github }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="{{ p.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="{{ p.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="mailto:{{ p.email }}" aria-label="Email"><i class="bi bi-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

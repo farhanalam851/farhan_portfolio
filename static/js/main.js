@@ -9,9 +9,14 @@
     toggle.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
+      root.setAttribute('data-bs-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
     });
   }
+
+  var yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+  root.setAttribute('data-bs-theme', root.getAttribute('data-theme') || 'light');
 
   // Nav shadow + scroll progress
   var nav = document.getElementById('siteNav');
@@ -38,7 +43,7 @@
   var spy = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
-        links.forEach(function (l) { l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id); });
+        links.forEach(function (l) { var h = l.getAttribute('href') || ''; l.classList.toggle('active', h.slice(-('#' + e.target.id).length) === '#' + e.target.id); });
       }
     });
   }, { rootMargin: '-45% 0px -50% 0px' });

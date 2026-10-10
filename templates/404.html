@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block seo %}{% include "partials/seo.html" with title="Page not found | Farhan Alam" description="That page does not exist. Head back to the portfolio." robots="noindex, nofollow" %}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="status-card">
+      <p class="big-404" aria-hidden="true">404</p>
+      <h1 class="page-title">This page wandered off.</h1>
+      <p class="lead-text">The link may be old or mistyped. Nothing is broken on your side.</p>
+      <pre class="term" aria-hidden="true"><span class="c">$</span> curl -I {{ request.path }}
+<span class="e">HTTP/1.1 404 Not Found</span></pre>
+      <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-accent btn-lg">Back to home</a>
+        <a href="{% url 'home' %}#work" class="btn btn-outline-ink btn-lg">See my work</a>
+        <a href="{% url 'home' %}#contact" class="btn btn-link link-ink btn-lg">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

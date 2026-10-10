@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block seo %}{% include "partials/seo.html" with title="Farhan Alam | Django &amp; Python Full-Stack Developer in Kanpur" description="Django &amp; Python full-stack developer in Kanpur. I build fast websites, e-commerce stores and REST APIs. Open to junior roles and freelance projects." %}{% endblock %}
+
+{% block head_extra %}<script type="application/ld+json">{{ schema_json|safe }}</script>{% endblock %}
+
 {% block content %}
 
 <!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="row align-items-center g-5">
-      <div class="col-lg-7 order-2 order-lg-1">
+      <div class="col-lg-7">
         <span class="status-pill reveal"><span class="dot"></span> Open to junior roles &amp; client projects</span>
         <h1 class="hero-title reveal" style="--d:.08s">
           I build web apps<br>that businesses<br>actually <em class="scribble">use</em>.
@@ -17,28 +21,28 @@
           from Kanpur. I turn ideas into fast, secure and good-looking websites, from the database to the last pixel.
         </p>
         <div class="d-flex flex-wrap gap-3 reveal" style="--d:.24s">
-          <a href="#contact" class="btn btn-accent btn-lg">Start a project <i class="bi bi-arrow-right ms-1"></i></a>
-          <a href="#work" class="btn btn-outline-ink btn-lg">See my work</a>
-          <a href="{% static 'files/Farhan_Alam_Resume.pdf' %}" class="btn btn-link link-ink btn-lg px-0" download>
+          <a href="#contact" class="btn btn-accent btn-lg" data-track="cta_start_project">Start a project <i class="bi bi-arrow-right ms-1"></i></a>
+          <a href="#work" class="btn btn-outline-ink btn-lg" data-track="cta_see_work">See my work</a>
+          <a href="{% static 'files/Farhan_Alam_Resume.pdf' %}" class="btn btn-link link-ink btn-lg px-0" download data-track="resume_download">
             <i class="bi bi-download me-1"></i> Resume
           </a>
         </div>
         <div class="row g-3 mt-4 hero-stats reveal" style="--d:.32s">
-          <div class="col-4"><div class="num" data-count="4">0</div><div class="lbl">Django projects</div></div>
-          <div class="col-4"><div class="num" data-count="9">0</div><div class="lbl">Technologies</div></div>
-          <div class="col-4"><div class="num"><span data-count="24">0</span>h</div><div class="lbl">Reply time</div></div>
+          <div class="col-4"><div class="num" data-count="{{ p.stat_projects }}">0</div><div class="lbl">Django projects</div></div>
+          <div class="col-4"><div class="num" data-count="{{ p.stat_tech }}">0</div><div class="lbl">Technologies</div></div>
+          <div class="col-4"><div class="num"><span data-count="{{ p.reply_hours }}">0</span>h</div><div class="lbl">Reply time</div></div>
         </div>
       </div>
 
-      <div class="col-lg-5 order-1 order-lg-2">
+      <div class="col-lg-5">
         <div class="portrait reveal" style="--d:.1s">
           <div class="portrait-frame">
             <img src="{% static 'img/hero.jpg' %}" alt="Portrait of Farhan Alam" class="portrait-img" loading="eager"
                  onerror="this.parentNode.classList.add('no-photo')">
             <div class="initials" aria-hidden="true">FA</div>
           </div>
-          <div class="chip chip-1"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" width="20" height="20"> Python</div>
-          <div class="chip chip-2"><img class="invert-dark" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="" width="20" height="20"> Django</div>
+          <div class="chip chip-1"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python logo" width="20" height="20"> Python</div>
+          <div class="chip chip-2"><img class="invert-dark" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django logo" width="20" height="20"> Django</div>
           <div class="chip chip-3"><i class="bi bi-code-slash"></i> &lt;/&gt; clean code</div>
           <div class="sticker">Kanpur<br>IN</div>
         </div>
@@ -53,14 +57,14 @@
     <div class="marquee-track">
       {% for r in "ab" %}{% for l in logos_1 %}
         <div class="logo-item"{% if r == "b" %} aria-hidden="true"{% endif %}>
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="{% if r == 'a' %}{{ l.name }}{% endif %}" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
-          <span>{{ l.name }}</span>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="{{ l.name }} logo" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
+          <span aria-hidden="true">{{ l.name }}</span>
         </div>
       {% endfor %}{% endfor %}
       {% for r in "ab" %}{% for l in logos_1 %}
         <div class="logo-item" aria-hidden="true">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
-          <span>{{ l.name }}</span>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="{{ l.name }} logo" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
+          <span aria-hidden="true">{{ l.name }}</span>
         </div>
       {% endfor %}{% endfor %}
     </div>
@@ -69,8 +73,8 @@
     <div class="marquee-track">
       {% for r in "abcd" %}{% for l in logos_2 %}
         <div class="logo-item" aria-hidden="true">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
-          <span>{{ l.name }}</span>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ l.icon }}" alt="{{ l.name }} logo" height="38" loading="lazy" {% if l.invert %}class="invert-dark"{% endif %}>
+          <span aria-hidden="true">{{ l.name }}</span>
         </div>
       {% endfor %}{% endfor %}
     </div>
@@ -126,7 +130,7 @@
       <div class="col-sm-6 col-lg-4 reveal" style="--d:{% widthratio forloop.counter0 1 60 %}ms">
         <article class="skill-card" data-tilt>
           <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ s.icon }}" alt="" width="44" height="44" loading="lazy" {% if s.invert %}class="invert-dark"{% endif %}>
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/{{ s.icon }}" alt="{{ s.name }} logo" width="44" height="44" loading="lazy" {% if s.invert %}class="invert-dark"{% endif %}>
           </div>
           <h3>{{ s.name }}</h3>
           <span class="skill-tag">{{ s.tag }}</span>
@@ -250,36 +254,24 @@
         </ul>
       </div>
       <div class="col-lg-7">
-        <form method="post" class="contact-card reveal" novalidate>
+        <form method="post" action="{% url 'home' %}" class="contact-card reveal" id="contactForm" novalidate>
           {% csrf_token %}
-          {% if messages %}
-            {% for m in messages %}
-              <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}success{% endif %}" role="alert">{{ m }}</div>
-            {% endfor %}
-          {% endif %}
-          <div class="hp" aria-hidden="true">{{ form.website }}</div>
+          <div id="formAlert" class="alert alert-danger" role="alert" tabindex="-1"{% if not form.errors %} hidden{% endif %}>
+            <i class="bi bi-exclamation-triangle me-1" aria-hidden="true"></i>
+            <span id="formAlertText">{% if form.non_field_errors %}{{ form.non_field_errors.0 }}{% elif form.errors %}Your message wasn't sent. Please fix the highlighted fields and try again.{% endif %}</span>
+          </div>
+          <div class="hp" aria-hidden="true">{{ form.contact_hp }}</div>
           <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
-              {{ form.name }}
-              {% for e in form.name.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
-            </div>
-            <div class="col-md-6">
-              <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
-              {{ form.email }}
-              {% for e in form.email.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
-            </div>
+            <div class="col-md-6">{% include "core/_field.html" with field=form.name %}</div>
+            <div class="col-md-6">{% include "core/_field.html" with field=form.email %}</div>
+            <div class="col-12">{% include "core/_field.html" with field=form.topic %}</div>
+            <div class="col-12">{% include "core/_field.html" with field=form.message %}</div>
             <div class="col-12">
-              <label class="form-label" for="{{ form.topic.id_for_label }}">What's this about?</label>
-              {{ form.topic }}
-            </div>
-            <div class="col-12">
-              <label class="form-label" for="{{ form.message.id_for_label }}">Message</label>
-              {{ form.message }}
-              {% for e in form.message.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-accent btn-lg w-100">Send message <i class="bi bi-send ms-1"></i></button>
+              <button type="submit" class="btn btn-accent btn-lg w-100" id="submitBtn">
+                <span class="btn-label">Send message <i class="bi bi-send ms-1" aria-hidden="true"></i></span>
+                <span class="btn-loading" hidden><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Sending&hellip;</span>
+              </button>
+              <p class="form-note">I only use your details to reply. See the <a href="{% url 'privacy' %}">privacy policy</a>.</p>
             </div>
           </div>
         </form>
@@ -288,4 +280,11 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block mobile_cta %}
+<div class="mobile-cta" id="mobileCta">
+  <a href="#contact" class="btn btn-accent" data-track="mobile_cta_start_project">Start a project <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+  <a href="{% static 'files/Farhan_Alam_Resume.pdf' %}" class="btn btn-outline-ink" download data-track="mobile_cta_resume" aria-label="Download resume"><i class="bi bi-download" aria-hidden="true"></i></a>
+</div>
 {% endblock %}

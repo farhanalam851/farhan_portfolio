@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block seo %}{% include "partials/seo.html" with title="Thank you | Farhan Alam" description="Your message has been received. I will reply by email soon." robots="noindex, nofollow" %}{% endblock %}
+{% block body_attrs %}{% if just_sent %} data-page-event="generate_lead"{% endif %}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="status-card">
+      <div class="status-icon ok" aria-hidden="true"><i class="bi bi-check-lg"></i></div>
+      <p class="eyebrow">Message received</p>
+      <h1 class="page-title">Thank you, I'll be in touch.</h1>
+      <p class="lead-text">Your message is safely with me. I usually reply within <strong>{{ p.reply_hours }} hours</strong>, by email.</p>
+
+      <ol class="next-steps">
+        <li><strong>I read it properly.</strong> No auto-replies, no templates.</li>
+        <li><strong>I email you back</strong> with questions or a few time slots to talk.</li>
+        <li><strong>If it's a project,</strong> we agree scope and timeline before any work starts.</li>
+      </ol>
+
+      <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-accent btn-lg">Back to the portfolio</a>
+        <a href="{{ p.github }}" class="btn btn-outline-ink btn-lg" target="_blank" rel="noopener">See my GitHub</a>
+        <a href="{% static 'files/Farhan_Alam_Resume.pdf' %}" class="btn btn-link link-ink btn-lg" download data-track="resume_download"><i class="bi bi-download me-1" aria-hidden="true"></i>Resume</a>
+      </div>
+      <p class="small muted mt-4">No reply after {{ p.reply_hours }} hours? Check your spam folder, or email <a href="mailto:{{ p.email }}">{{ p.email }}</a> directly.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% comment %}
+  Plain-language starting point written for a personal portfolio. Have a legal professional
+  review it before relying on it, and update LEGAL_LAST_UPDATED in config/settings.py when it changes.
+{% endcomment %}
+
+{% block seo %}{% include "partials/seo.html" with title="Terms &amp; Conditions | Farhan Alam" description="The terms for using this portfolio website, including how my content, services and enquiries are handled." %}{% endblock %}
+
+{% block content %}
+<section class="page-section legal">
+  <div class="container">
+    <article class="legal-body">
+      <p class="eyebrow">Legal</p>
+      <h1 class="page-title">Terms &amp; conditions</h1>
+      <p class="muted">Last updated: {{ LEGAL_UPDATED }}</p>
+
+      <p>By using this website you agree to these terms. If you do not agree, please do not use the site.</p>
+
+      <h2>1. About this site</h2>
+      <p>This is the personal portfolio of {{ p.name }}, a web developer based in {{ p.location }}. It showcases my skills, projects and services so that employers and clients can get to know my work and contact me.</p>
+
+      <h2>2. Using the site</h2>
+      <p>You may browse the site and use the contact form for genuine enquiries. Please do not:</p>
+      <ul>
+        <li>send spam, advertising or abusive messages through the contact form;</li>
+        <li>try to break, overload, scan or gain unauthorised access to the site or its admin area;</li>
+        <li>use automated tools to copy the site at scale.</li>
+      </ul>
+
+      <h2>3. Content and ownership</h2>
+      <p>Unless stated otherwise, the text, design, layout and code of this site are the work of {{ p.name }} and are protected by copyright. You may link to the site and quote short extracts with credit. Please do not copy the design or content wholesale and present it as your own.</p>
+      <p>Technology names and logos (such as Python, Django, HTML5, CSS3, JavaScript, Bootstrap, PostgreSQL, MySQL, SQLite, Git, GitHub and VS Code) belong to their respective owners and are shown only to describe the tools I work with. Code in my public GitHub repositories is governed by the licence in each repository.</p>
+
+      <h2>4. Services and enquiries</h2>
+      <p>Descriptions of services on this site are for information and are not a binding offer. Sending a message does not create a contract. Any paid project is agreed separately in writing (an email or a short agreement) covering scope, price, timeline and ownership of the finished work before it starts.</p>
+
+      <h2>5. Accuracy and availability</h2>
+      <p>I try to keep the information here accurate and current, including my availability, skills and project descriptions, but I do not guarantee it is complete or up to date. The site is provided &ldquo;as is&rdquo;, and may be changed, paused or removed at any time without notice.</p>
+
+      <h2>6. Links to other sites</h2>
+      <p>The site links to third-party services such as GitHub, LinkedIn and Instagram. I am not responsible for their content or practices.</p>
+
+      <h2>7. Limit of liability</h2>
+      <p>To the fullest extent permitted by law, I am not liable for any loss or damage arising from your use of, or inability to use, this website. Nothing in these terms limits any rights you have under law that cannot be excluded.</p>
+
+      <h2>8. Privacy</h2>
+      <p>How I handle personal data and cookies is explained in the <a href="{% url 'privacy' %}">privacy policy</a>.</p>
+
+      <h2>9. Governing law</h2>
+      <p>These terms are governed by the laws of India. Any dispute will be subject to the courts of Kanpur, Uttar Pradesh, unless the law requires otherwise.</p>
+
+      <h2>10. Changes and contact</h2>
+      <p>I may update these terms from time to time; the date at the top shows the latest version. Questions? Email <a href="mailto:{{ p.email }}">{{ p.email }}</a>.</p>
+
+      <p class="mt-4"><a href="{% url 'home' %}" class="btn btn-outline-ink">&larr; Back to the portfolio</a></p>
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -9,6 +9,9 @@ PROFILE = {
     "linkedin": "https://www.linkedin.com/in/farhan-alam-b590b8408",
     "instagram": "https://www.instagram.com/webby_farhan",
     "instagram_handle": "@webby_farhan",
+    "stat_projects": 4,
+    "stat_tech": 9,
+    "reply_hours": 24,
     "roles": [
         "Django developer",
         "Python full-stack builder",

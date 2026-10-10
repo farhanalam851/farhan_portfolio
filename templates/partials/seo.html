@@ -1,0 +1,21 @@
+{% load static %}{% comment %}
+  Per-page SEO. Pages override the `seo` block in base.html and include this partial with
+  title="..." description="..." and optionally robots="noindex, nofollow".
+{% endcomment %}<title>{{ title|default:"Farhan Alam | Django &amp; Python Full-Stack Developer in Kanpur" }}</title>
+  <meta name="description" content="{{ description|default:'Django &amp; Python full-stack developer in Kanpur. I build fast websites, e-commerce stores and REST APIs. Open to junior roles and freelance projects.' }}">
+  <meta name="robots" content="{{ robots|default:'index, follow, max-image-preview:large' }}">
+  {% if not robots %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endif %}
+
+  <meta property="og:site_name" content="Farhan Alam">
+  <meta property="og:type" content="{{ og_type|default:'website' }}">
+  <meta property="og:title" content="{{ title|default:'Farhan Alam | Django &amp; Python Full-Stack Developer in Kanpur' }}">
+  <meta property="og:description" content="{{ description|default:'Django &amp; Python full-stack developer in Kanpur. I build fast websites, e-commerce stores and REST APIs. Open to junior roles and freelance projects.' }}">
+  <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-image.jpg' %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Farhan Alam, Django and Python full-stack developer, standing on a rooftop terrace">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title|default:'Farhan Alam | Django &amp; Python Full-Stack Developer in Kanpur' }}">
+  <meta name="twitter:description" content="{{ description|default:'Django &amp; Python full-stack developer in Kanpur. I build fast websites, e-commerce stores and REST APIs. Open to junior roles and freelance projects.' }}">
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-image.jpg' %}">

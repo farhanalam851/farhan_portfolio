@@ -3,22 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Farhan Alam | Django & Python Full-Stack Developer{% endblock %}</title>
-  <meta name="description" content="Farhan Alam is a Django and Python full-stack web developer in Kanpur, India. I build fast, modern websites, e-commerce stores and REST APIs for businesses.">
-  <meta property="og:title" content="Farhan Alam | Django & Python Full-Stack Developer">
-  <meta property="og:description" content="Websites, e-commerce and APIs built with Django. Available for junior roles and client projects.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f3eee4">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e4572e'/><text x='50' y='68' font-size='56' text-anchor='middle' font-family='Georgia' font-weight='700' fill='white'>F</text></svg>">
+  {% block seo %}{% include "partials/seo.html" %}{% endblock %}
+  <meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12100d" media="(prefers-color-scheme: dark)">
+
+  <link rel="icon" href="{% static 'img/favicons/favicon.svg' %}" type="image/svg+xml">
+  <link rel="icon" href="{% static 'img/favicons/favicon-32.png' %}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{% static 'img/favicons/favicon-16.png' %}" sizes="16x16" type="image/png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="{% static 'img/favicons/apple-touch-icon.png' %}">
+  <link rel="manifest" href="{% static 'img/favicons/site.webmanifest' %}">
 
   <script>
-    // Apply saved theme before paint to avoid a flash.
+    // Runs before paint: marks JS as available (so animations only hide things when JS can reveal them)
+    // and applies the saved colour theme to avoid a flash.
+    document.documentElement.classList.add('js');
     try {
       var t = localStorage.getItem('theme');
       if (!t && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
-      if (t) document.documentElement.setAttribute('data-theme', t);
+      if (t) { document.documentElement.setAttribute('data-theme', t); document.documentElement.setAttribute('data-bs-theme', t); }
     } catch (e) {}
   </script>
+  {% if GA_ID %}<script>window.GA_ID = "{{ GA_ID|escapejs }}";</script>{% endif %}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,52 +32,78 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  {% block head_extra %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}"{% block body_attrs %}{% endblock %}>
+  <a class="skip-link" href="#main">Skip to content</a>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-  <nav class="navbar navbar-expand-lg site-nav fixed-top" id="siteNav">
+  <nav class="navbar navbar-expand-lg site-nav fixed-top" id="siteNav" aria-label="Main">
     <div class="container">
-      <a class="navbar-brand brand" href="#top">farhan<span>.</span>dev</a>
+      <a class="navbar-brand brand" href="{% url 'home' %}">farhan<span>.</span>dev</a>
       <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
         <i class="bi bi-list fs-2"></i>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-1">
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-          <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
-          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#journey">Journey</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#work">Work</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#journey">Journey</a></li>
         </ul>
         <div class="d-flex align-items-center gap-2 pb-3 pb-lg-0">
           <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch colour theme">
             <i class="bi bi-moon-stars theme-moon"></i><i class="bi bi-sun theme-sun"></i>
           </button>
-          <a href="#contact" class="btn btn-ink">Hire me</a>
+          <a href="{% url 'home' %}#contact" class="btn btn-ink" data-track="nav_hire_me">Hire me</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <main id="top">
+  <main id="main" tabindex="-1">
     {% block content %}{% endblock %}
   </main>
 
   <footer class="site-footer">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-      <div class="brand">farhan<span>.</span>dev</div>
-      <div class="small foot-note">Designed and built by hand with Django &amp; Bootstrap &middot; Kanpur, India</div>
-      <div class="d-flex gap-3 fs-5">
-        <a href="{{ p.github }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
-        <a href="{{ p.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-        <a href="{{ p.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="mailto:{{ p.email }}" aria-label="Email"><i class="bi bi-envelope"></i></a>
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <div class="brand">farhan<span>.</span>dev</div>
+        <div class="small foot-note">Designed and built by hand with Django &amp; Bootstrap &middot; Kanpur, India</div>
+        <div class="d-flex gap-3 fs-5">
+          <a href="{{ p.github }}" target="_blank" rel="noopener" aria-label="GitHub profile"><i class="bi bi-github"></i></a>
+          <a href="{{ p.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn profile"><i class="bi bi-linkedin"></i></a>
+          <a href="{{ p.instagram }}" target="_blank" rel="noopener" aria-label="Instagram profile"><i class="bi bi-instagram"></i></a>
+          <a href="mailto:{{ p.email }}" aria-label="Send an email"><i class="bi bi-envelope"></i></a>
+        </div>
       </div>
+      <ul class="legal-links">
+        <li><a href="{% url 'privacy' %}">Privacy policy</a></li>
+        <li><a href="{% url 'terms' %}">Terms &amp; conditions</a></li>
+        <li><button type="button" class="link-btn" id="cookieSettings">Cookie settings</button></li>
+        <li class="copy">&copy; <span id="year">2026</span> {{ p.name }}</li>
+      </ul>
     </div>
   </footer>
 
+  {% block mobile_cta %}{% endblock %}
+
+  <div class="cookie-banner" id="cookieBanner" role="region" aria-label="Cookie consent" hidden>
+    <div class="cookie-text">
+      <strong>Cookies, briefly.</strong>
+      Essential cookies keep the contact form secure. With your OK, I also use Google Analytics to see which pages are useful. Nothing is sold or used for ads.
+      <a href="{% url 'privacy' %}">Read the privacy policy</a>.
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-outline-ink btn-sm" id="cookieDecline">Decline</button>
+      <button type="button" class="btn btn-accent btn-sm" id="cookieAccept">Accept analytics</button>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/analytics.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/forms.js' %}"></script>
 </body>
 </html>

@@ -12,18 +12,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "")
 if not SECRET_KEY:
     if DEBUG:
         SECRET_KEY = "dev-only-insecure-key"
-    elif os.environ.get("VERCEL"):
-        # Vercel loads these settings during the build to find the app, so raising here would stop the
-        # whole deployment. Use a throwaway random key instead and warn loudly. Logins and form tokens
-        # will not stay valid between requests until you set a real SECRET_KEY in Vercel.
+    else:
+        # Never crash while the settings are merely being read (Vercel does this during the build,
+        # possibly without your environment variables). Use a throwaway random key and warn loudly.
+        # Until you set a real SECRET_KEY, logins and form tokens will not stay valid between requests.
         import secrets
         import sys
         SECRET_KEY = secrets.token_urlsafe(50)
-        print("WARNING: SECRET_KEY is not set. Add it under Vercel > Settings > Environment Variables.",
-              file=sys.stderr)
-    else:
-        from django.core.exceptions import ImproperlyConfigured
-        raise ImproperlyConfigured("Set the SECRET_KEY environment variable when DEBUG=0.")
+        print("WARNING: SECRET_KEY is not set. Add it in your host's environment variables.", file=sys.stderr)
 
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]

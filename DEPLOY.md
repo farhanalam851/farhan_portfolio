@@ -22,7 +22,7 @@ Free-plan details change often, so check each host's current pricing page before
 Vercel runs Django as a serverless function, so two things differ from a normal host:
 **SQLite will not work** (the filesystem is read-only and resets), so you need a hosted Postgres,
 and your database is set up during the build rather than at startup. The repo already contains
-`vercel.json` and `vercel_build.sh` for this.
+`vercel.json` and `build.py` for this.
 
 1. Push the project to GitHub (see above).
 2. On vercel.com choose **Add New > Project**, import the repo. Vercel detects Django from `manage.py` by itself, so leave the Framework Preset as detected
@@ -36,7 +36,7 @@ and your database is set up during the build rather than at startup. The repo al
    - `DJANGO_SUPERUSER_EMAIL` = `farhanalam8510@gmail.com`
    - `DJANGO_SUPERUSER_PASSWORD` = a strong password
    - optional: `EMAIL_*` and `GA_MEASUREMENT_ID` (see `.env.example`)
-5. Click **Deploy**. Vercel collects static files itself and serves them from its CDN; `vercel_build.sh` migrates the database, loads your starter
+5. Click **Deploy**. Vercel collects static files itself and serves them from its CDN; `build.py` migrates the database, loads your starter
    content and creates your admin login. Open the `*.vercel.app` address, then `/admin/`.
 6. Custom domain: add it under **Settings > Domains**, then add it to `ALLOWED_HOSTS` and
    `CSRF_TRUSTED_ORIGINS` (with `https://`) as environment variables and redeploy.

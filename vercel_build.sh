@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# Build step for Vercel. Runs once per deployment (not on every request).
+# Build step for Vercel. Runs once per deployment, after dependencies are installed.
+# Vercel runs collectstatic by itself and serves /static/ from its CDN, so it is not called here.
 set -o errexit
 
-python3 manage.py collectstatic --noinput
-
-# Database setup. Needs DATABASE_URL (or POSTGRES_URL) to be set in Vercel's Environment Variables.
+# Database setup. Needs DATABASE_URL (or POSTGRES_URL) in Vercel's Environment Variables.
 if [[ -n "${DATABASE_URL:-}${POSTGRES_URL:-}" ]]; then
   python3 manage.py migrate --noinput
   python3 manage.py seed_content

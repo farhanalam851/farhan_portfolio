@@ -1,12 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "bash vercel_build.sh",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ],
   "functions": {
-    "api/index.py": {
-      "includeFiles": "{staticfiles,static,templates,core,config}/**",
+    "config/wsgi.py": {
       "maxDuration": 30
     }
   }

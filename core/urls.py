@@ -3,7 +3,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.http import Http404
 from django.urls import path
 from django.views.defaults import page_not_found
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 from . import views
 
@@ -36,6 +36,10 @@ urlpatterns = [
     path("thank-you/", views.thanks, name="thanks"),
     path("privacy/", views.privacy, name="privacy"),
     path("terms/", views.terms, name="terms"),
+    # Browsers ask for these at the site root. On Vercel the CDN serves /static/ but WhiteNoise's root
+    # files are not active, so forward them to the copies under /static/root/.
+    path("favicon.ico", RedirectView.as_view(url="/static/root/favicon.ico", permanent=False)),
+    path("apple-touch-icon.png", RedirectView.as_view(url="/static/root/apple-touch-icon.png", permanent=False)),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots"),
     path("sitemap.xml", sitemap, {"sitemaps": {"pages": PortfolioSitemap}}, name="sitemap"),
 ]

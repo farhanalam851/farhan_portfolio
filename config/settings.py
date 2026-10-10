@@ -6,7 +6,7 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.environ.get("DEBUG", "1") == "1"
+DEBUG = os.environ.get("DEBUG", "0" if os.environ.get("VERCEL") else "1") == "1"
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
 if not SECRET_KEY:
@@ -118,13 +118,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Files in static/root/ (favicon.ico, apple-touch-icon.png) are served at the site root,
 # because browsers and phones request them at /favicon.ico and /apple-touch-icon.png.
 WHITENOISE_ROOT = BASE_DIR / "static" / "root"
+if os.environ.get("VERCEL"):
+    # Vercel's CDN serves /static/ directly, and the function has no manifest file to read.
+    _static_backend = "django.contrib.staticfiles.storage.StaticFilesStorage"
+elif DEBUG:
+    _static_backend = "whitenoise.storage.CompressedStaticFilesStorage"
+else:
+    _static_backend = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
-        if DEBUG
-        else "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    },
+    "staticfiles": {"BACKEND": _static_backend},
 }
 
 CSRF_FAILURE_VIEW = "core.views.csrf_failed"

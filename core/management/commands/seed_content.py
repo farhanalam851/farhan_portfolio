@@ -32,13 +32,20 @@ class Command(BaseCommand):
             for i, (_n, title, text) in enumerate(data.PROCESS):
                 ProcessStep.objects.create(order=i * 10, title=title, text=text)
 
-        if not Project.objects.exists():
-            for i, p in enumerate(data.PROJECTS):
-                Project.objects.create(
-                    order=i * 10, title=p["title"], kind=p["kind"], summary=p["summary"],
-                    points="\n".join(p["points"]), stack=", ".join(p["stack"]),
-                    link=p["link"], featured=p.get("featured", False),
-                )
+        # Adds any project from data.py that is not in the database yet, so existing sites pick up new ones.
+        existing = Project.objects.exists()
+        added = 0
+        for i, p in enumerate(data.PROJECTS):
+            if Project.objects.filter(title=p["title"]).exists():
+                continue
+            Project.objects.create(
+                order=(1 + added) if existing else i * 10, title=p["title"], kind=p["kind"], summary=p["summary"],
+                points="\n".join(p["points"]), stack=", ".join(p["stack"]),
+                link=p["link"], live_url=p.get("live_url", ""), image=p.get("image", ""),
+                featured=p.get("featured", False),
+            )
+            added += 1
+
         if not Skill.objects.exists():
             for i, s in enumerate(data.SKILLS):
                 Skill.objects.create(

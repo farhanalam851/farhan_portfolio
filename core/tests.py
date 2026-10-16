@@ -120,3 +120,28 @@ class AnalyticsTests(TestCase):
     @override_settings(GA_MEASUREMENT_ID="G-ABC123XYZ")
     def test_measurement_id_is_exposed_when_configured(self):
         self.assertIn("window.GA_ID", self.client.get("/").content.decode())
+
+
+class ProjectShowcaseTests(TestCase):
+    def test_new_client_projects_show_live_and_github_links(self):
+        html = self.client.get("/").content.decode()
+        for live, repo in [("https://ffmanufacturer.vercel.app/", "https://github.com/farhanalam851/ffmanufacturer"),
+                           ("https://lalasarees-site.vercel.app/", "https://github.com/farhanalam851/lalasarees_site")]:
+            self.assertIn(f'href="{live}"', html)
+            self.assertIn(f'href="{repo}"', html)
+            self.assertIn(f"image.thum.io/get/width/1200/crop/750/{live}", html)
+
+    def test_removed_projects_are_gone(self):
+        html = self.client.get("/").content.decode()
+        self.assertNotIn("Django Blog Platform", html)
+        self.assertNotIn("B2B Clothing E-Commerce Platform", html)
+
+    def test_seed_adds_missing_projects_to_an_existing_database(self):
+        from django.core.management import call_command
+        from .models import Project
+        call_command("seed_content")
+        Project.objects.filter(title__startswith="F.F").delete()
+        call_command("seed_content")
+        titles = list(Project.objects.values_list("title", flat=True))
+        self.assertEqual(len(titles), len(set(titles)))
+        self.assertEqual(Project.objects.count(), 4)

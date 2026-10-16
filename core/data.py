@@ -61,30 +61,33 @@ SKILLS = [
 
 PROJECTS = [
     {
-        "title": "B2B Clothing E-Commerce Platform",
-        "kind": "Full-stack - Django",
+        "title": "F.F Manufacturer - Leather Belts Store",
+        "kind": "Client project - Django",
         "featured": True,
-        "summary": "A wholesale clothing store built for business buyers: company details, GSTIN, "
-                   "bulk-style ordering, payments and PDF invoices.",
+        "summary": "A retail and wholesale store for a Kanpur leather-belt manufacturer, with "
+                   "verified business accounts, GST invoicing and pan-India shipping.",
         "points": [
-            "Product and category management with size and colour variants",
-            "Registration, login and customer profiles",
-            "Order flow: pending, paid, failed, shipped, delivered, cancelled",
-            "Shipping and tax calculation with downloadable PDF invoices",
-            "Customer reviews and ratings, plus a full admin panel",
+            "Men and women categories with product reviews and ratings",
+            "Wholesale registration with GSTIN verification and bulk pricing",
+            "Cart, checkout, order tracking and customer accounts",
         ],
         "stack": ["Django", "Bootstrap", "JavaScript", "SQL"],
-        "link": "https://github.com/farhanalam851/Cloth-WebSite",
+        "link": "https://github.com/farhanalam851/ffmanufacturer",
+        "live_url": "https://ffmanufacturer.vercel.app/",
     },
     {
-        "title": "Django Blog Platform",
-        "kind": "Full-stack - Django",
-        "summary": "A complete blogging platform with profiles, likes, image uploads and "
-                   "author-only permissions, configured for production.",
-        "points": ["Author-based CRUD and personal post pages",
-                   "PostgreSQL, WhiteNoise and Gunicorn deployment setup"],
-        "stack": ["Django", "PostgreSQL", "Gunicorn"],
-        "link": "https://github.com/farhanalam851/DJANGO-BLOG-WEBSITE",
+        "title": "Lala Sarees - Saree Store",
+        "kind": "Client project - Django",
+        "summary": "An elegant online saree shop for a Kanpur retailer, covering collections, "
+                   "occasions and wholesale buyers.",
+        "points": [
+            "Collections and occasion filters (wedding, party, festive, bridal)",
+            "Bag, checkout with UPI, cards and COD, plus GST invoices",
+            "Wholesale enquiries for boutiques and verified businesses",
+        ],
+        "stack": ["Django", "Bootstrap", "JavaScript", "SQL"],
+        "link": "https://github.com/farhanalam851/lalasarees_site",
+        "live_url": "https://lalasarees-site.vercel.app/",
     },
     {
         "title": "Django REST API",
@@ -111,7 +114,7 @@ SERVICES = [
     {"icon": "bi-briefcase", "title": "Business websites",
      "text": "Fast, professional sites for companies, shops and individuals that make you look credible online."},
     {"icon": "bi-bag-check", "title": "E-commerce stores",
-     "text": "Catalogues, carts, orders, payments and invoices, built on the same stack as my B2B platform."},
+     "text": "Catalogues, carts, orders, payments and invoices, built on the same stack as my client stores."},
     {"icon": "bi-window-stack", "title": "Custom web apps",
      "text": "Dashboards, portals and internal tools shaped around how your business really works."},
     {"icon": "bi-diagram-3", "title": "REST APIs",

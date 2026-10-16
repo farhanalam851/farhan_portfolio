@@ -11,6 +11,15 @@ def csv(text):
     return [t.strip() for t in (text or "").split(",") if t.strip()]
 
 
+def preview_image(live_url, image=""):
+    """Explicit image wins; otherwise a live screenshot of the deployed site."""
+    if image:
+        return image
+    if live_url:
+        return f"https://image.thum.io/get/width/1200/crop/750/{live_url}"
+    return ""
+
+
 def get_profile(request=None):
     """Profile from the admin panel; falls back to core/data.py. Cached per request."""
     if request is not None and hasattr(request, "_site_profile"):
@@ -42,7 +51,8 @@ def get_profile(request=None):
 def get_content():
     projects = [
         {"title": p.title, "kind": p.kind, "summary": p.summary, "points": lines(p.points),
-         "stack": csv(p.stack), "link": p.link or "#", "featured": p.featured}
+         "stack": csv(p.stack), "link": p.link or "#", "featured": p.featured,
+         "live_url": p.live_url, "image": preview_image(p.live_url, p.image)}
         for p in Project.objects.filter(is_visible=True)
     ]
     skills = [
@@ -68,7 +78,7 @@ def get_content():
         "logos_1": logos_1 or data.LOGOS_ROW_1,
         "logos_2": logos_2 or data.LOGOS_ROW_2,
         "process": steps or data.PROCESS,
-        "projects": projects or data.PROJECTS,
+        "projects": projects or [dict(p, image=preview_image(p.get("live_url", ""), p.get("image", ""))) for p in data.PROJECTS],
         "skills": skills or data.SKILLS,
         "services": services or data.SERVICES,
         "journey": journey or data.JOURNEY,

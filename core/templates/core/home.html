@@ -98,8 +98,8 @@
         <h2 class="section-title reveal">A student who ships like a professional.</h2>
         <p class="lead-text reveal">
           I'm a BCA student in Kanpur who learned web development by building real things, not just following tutorials.
-          My flagship project is a complete B2B clothing e-commerce platform with authentication, orders, GST details,
-          payments, tax and shipping calculation, PDF invoices and reviews.
+          My recent work is client e-commerce stores for Kanpur businesses, with authentication, orders, GST details,
+          wholesale accounts, payments, shipping and invoices.
         </p>
         <p class="reveal">
           I care about the details clients actually notice: pages that load fast, forms that work on a phone,
@@ -153,8 +153,14 @@
       {% for pr in projects %}
       <div class="{% if pr.featured %}col-12{% else %}col-md-6 col-lg-4{% endif %} reveal">
         <article class="project {% if pr.featured %}project-featured{% endif %}">
-          <div class="browser" aria-hidden="true">
-            <div class="browser-bar"><i></i><i></i><i></i><span>{{ pr.title|slugify }}.app</span></div>
+          <div class="browser" {% if not pr.image %}aria-hidden="true"{% endif %}>
+            <div class="browser-bar"><i></i><i></i><i></i><span>{% if pr.live_url %}{{ pr.live_url|cut:"https://"|cut:"http://"|cut:"/" }}{% else %}{{ pr.title|slugify }}.app{% endif %}</span></div>
+            {% if pr.image %}
+            <a class="browser-shot" {% if pr.live_url %}href="{{ pr.live_url }}" target="_blank" rel="noopener" aria-label="Open {{ pr.title }} live site"{% else %}tabindex="-1" aria-hidden="true"{% endif %}>
+              <img src="{% if pr.image|slice:':4' == 'http' %}{{ pr.image }}{% else %}{% static pr.image %}{% endif %}" alt="Preview of {{ pr.title }}" loading="lazy" width="1200" height="750"
+                   onerror="this.closest('.browser').classList.add('shot-failed')">
+            </a>
+            {% endif %}
             <div class="browser-body">
               <div class="mock-line w60"></div><div class="mock-line w90"></div>
               <div class="mock-grid"><b></b><b></b><b></b>{% if pr.featured %}<b></b><b></b><b></b>{% endif %}</div>
@@ -166,9 +172,16 @@
             <p>{{ pr.summary }}</p>
             <ul>{% for pt in pr.points %}<li>{{ pt }}</li>{% endfor %}</ul>
             <div class="stack">{% for t in pr.stack %}<span>{{ t }}</span>{% endfor %}</div>
-            <a href="{{ pr.link }}" class="project-link" target="_blank" rel="noopener">
-              View code on GitHub <i class="bi bi-arrow-up-right"></i>
-            </a>
+            <div class="project-links">
+              {% if pr.live_url %}
+              <a href="{{ pr.live_url }}" class="project-link project-link-live" target="_blank" rel="noopener" data-track="project_live_{{ pr.title|slugify }}">
+                Live demo <i class="bi bi-arrow-up-right"></i>
+              </a>
+              {% endif %}
+              <a href="{{ pr.link }}" class="project-link" target="_blank" rel="noopener" data-track="project_code_{{ pr.title|slugify }}">
+                View code on GitHub <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
           </div>
         </article>
       </div>

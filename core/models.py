@@ -42,7 +42,10 @@ class Project(OrderedContent):
     summary = models.TextField()
     points = models.TextField(blank=True, help_text="One bullet point per line.")
     stack = models.CharField(max_length=200, blank=True, help_text="Comma separated, e.g. Django, Bootstrap, SQL")
-    link = models.URLField(blank=True, help_text="GitHub or live site URL.")
+    link = models.URLField(blank=True, help_text="GitHub repository URL.")
+    live_url = models.URLField("Live site URL", blank=True, help_text="Deployed website. Adds a \"Live demo\" button and an automatic preview image.")
+    image = models.CharField("Preview image", max_length=300, blank=True,
+                             help_text="Optional. A full https:// image URL, or a path under static/ (e.g. img/projects/mysite.jpg). Leave empty to auto-preview the live site.")
     featured = models.BooleanField(default=False, help_text="Shows as the big wide card.")
 
     class Meta(OrderedContent.Meta):
